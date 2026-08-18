@@ -36,6 +36,7 @@ DEBUG = os.getenv(
     "True"
 ).lower() == "true"
 
+
 ALLOWED_HOSTS = [
     host.strip()
     for host in os.getenv(
@@ -58,7 +59,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
-    # SkillForge application
     "core",
 ]
 
@@ -121,12 +121,29 @@ WSGI_APPLICATION = "skillforge.wsgi.application"
 # DATABASE
 # ============================================================
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+
+if DATABASE_URL:
+
+    import dj_database_url
+
+    DATABASES = {
+        "default": dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
     }
-}
+
+else:
+
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 
 # ============================================================
