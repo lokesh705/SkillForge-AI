@@ -1,0 +1,362 @@
+{% extends 'base.html' %}
+
+{% block title %}
+SkillForge AI | Dashboard
+{% endblock %}
+
+{% block content %}
+
+<section class="dashboard-section">
+
+    <div class="container">
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <div class="dashboard-header">
+
+            <p class="section-label">
+                PERSONAL DASHBOARD
+            </p>
+
+            <h1>
+                Welcome back,
+                {{ user.username }} 👋
+            </h1>
+
+            <p class="dashboard-description">
+                Track your skills, analyze your career progress
+                and continue learning.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             STATISTICS
+        ================================================== -->
+
+        <div class="dashboard-stats">
+
+            <!-- Skills -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🛠️
+                </div>
+
+                <div>
+
+                    <span>
+                        My Skills
+                    </span>
+
+                    <strong>
+                        {{ skills_count }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Learning Topics -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🗺️
+                </div>
+
+                <div>
+
+                    <span>
+                        Learning Topics
+                    </span>
+
+                    <strong>
+                        {{ learning_items_count }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Completed -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    ✅
+                </div>
+
+                <div>
+
+                    <span>
+                        Completed
+                    </span>
+
+                    <strong>
+                        {{ completed_items_count }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             DASHBOARD CARDS
+        ================================================== -->
+
+        <div class="dashboard-grid">
+
+
+            <!-- PROFILE -->
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-card-icon">
+                    👤
+                </div>
+
+                <h3>
+                    My Profile
+                </h3>
+
+                <p>
+                    Keep your education, college and career
+                    information updated.
+                </p>
+
+                <a
+                    href="{% url 'profile' %}"
+                    class="btn secondary-btn"
+                >
+                    View Profile
+                </a>
+
+            </div>
+
+
+            <!-- SKILLS -->
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-card-icon">
+                    🛠️
+                </div>
+
+                <h3>
+                    My Skills
+                </h3>
+
+                <p>
+                    Add and manage the technical skills
+                    you currently know.
+                </p>
+
+                <a
+                    href="{% url 'skills' %}"
+                    class="btn secondary-btn"
+                >
+                    Manage Skills
+                </a>
+
+            </div>
+
+
+            <!-- CAREER -->
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-card-icon">
+                    🎯
+                </div>
+
+                <h3>
+                    Career Goal
+                </h3>
+
+                <p>
+                    Select the career you want to pursue and
+                    understand its required skills.
+                </p>
+
+                <a
+                    href="{% url 'career' %}"
+                    class="btn secondary-btn"
+                >
+                    Choose Career
+                </a>
+
+            </div>
+
+
+            <!-- SKILL GAP -->
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-card-icon">
+                    📊
+                </div>
+
+                <h3>
+                    Skill Gap Analysis
+                </h3>
+
+                <p>
+                    Compare your current skills with the
+                    skills required for your target career.
+                </p>
+
+                <a
+                    href="{% url 'skill_gap' %}"
+                    class="btn secondary-btn"
+                >
+                    Analyze Skills
+                </a>
+
+            </div>
+
+
+            <!-- ROADMAP -->
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-card-icon">
+                    🗺️
+                </div>
+
+                <h3>
+                    Learning Roadmap
+                </h3>
+
+                <p>
+                    Follow your personalized learning path
+                    and track your progress.
+                </p>
+
+                <a
+                    href="{% url 'roadmap' %}"
+                    class="btn primary-btn"
+                >
+                    View Roadmap
+                </a>
+
+            </div>
+
+
+            <!-- PROJECTS -->
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-card-icon">
+                    💻
+                </div>
+
+                <h3>
+                    Projects
+                </h3>
+
+                <p>
+                    Showcase your projects and demonstrate
+                    your practical development experience.
+                </p>
+
+                <a
+                    href="{% url 'projects' %}"
+                    class="btn secondary-btn"
+                >
+                    Manage Projects
+                </a>
+
+            </div>
+
+
+            <!-- CERTIFICATIONS -->
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-card-icon">
+                    🏆
+                </div>
+
+                <h3>
+                    Certifications
+                </h3>
+
+                <p>
+                    Keep track of your professional
+                    certifications and achievements.
+                </p>
+
+                <a
+                    href="{% url 'certifications' %}"
+                    class="btn secondary-btn"
+                >
+                    Manage Certifications
+                </a>
+
+            </div>
+
+
+            <!-- CAREER READINESS -->
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-card-icon">
+                    🚀
+                </div>
+
+                <h3>
+                    Career Readiness
+                </h3>
+
+                <p>
+                    Your readiness grows as you build skills,
+                    complete roadmap topics and improve your gaps.
+                </p>
+
+                <a
+                    href="{% url 'skill_gap' %}"
+                    class="btn secondary-btn"
+                >
+                    Check Readiness
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SMALL ADMIN BUTTON
+        ================================================== -->
+
+        {% if user.is_staff %}
+
+        <div class="dashboard-admin-link">
+
+            <a
+                href="{% url 'admin:index' %}"
+                class="admin-small-btn"
+            >
+                ⚙️ Admin
+            </a>
+
+        </div>
+
+        {% endif %}
+
+
+    </div>
+
+</section>
+
+{% endblock %}

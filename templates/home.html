@@ -1,0 +1,438 @@
+{% extends 'base.html' %}
+
+{% block title %}
+SkillForge AI | Build Your Career
+{% endblock %}
+
+{% block content %}
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+    <div class="container hero-content">
+
+        <div class="hero-text">
+
+            <p class="hero-label">
+                PERSONAL CAREER DEVELOPMENT PLATFORM
+            </p>
+
+            <h1>
+                Build Your Skills.
+                <span>Build Your Future.</span>
+            </h1>
+
+            <p class="hero-description">
+                SkillForge AI helps students and developers understand
+                their current skills, identify skill gaps, and create
+                personalized career learning roadmaps.
+            </p>
+
+            <div class="hero-buttons">
+
+                {% if user.is_authenticated %}
+
+                    <a
+                        href="{% url 'dashboard' %}"
+                        class="btn primary-btn"
+                    >
+                        Go to Dashboard
+                    </a>
+
+                {% else %}
+
+                    <a
+                        href="{% url 'signup' %}"
+                        class="btn primary-btn"
+                    >
+                        Get Started
+                    </a>
+
+                {% endif %}
+
+                <a
+                    href="#features"
+                    class="btn secondary-btn"
+                >
+                    Explore Features
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             CAREER READINESS PREVIEW
+        ================================================== -->
+
+        <div class="hero-card">
+
+            <div class="card-header">
+
+                <span>
+                    Career Readiness
+                </span>
+
+                <strong>
+                    72%
+                </strong>
+
+            </div>
+
+            <div class="progress">
+
+                <div class="progress-bar"></div>
+
+            </div>
+
+            <div class="skill-list">
+
+                <div class="skill-item">
+
+                    <span>
+                        Python
+                    </span>
+
+                    <span class="completed">
+                        ✓
+                    </span>
+
+                </div>
+
+                <div class="skill-item">
+
+                    <span>
+                        Django
+                    </span>
+
+                    <span class="completed">
+                        ✓
+                    </span>
+
+                </div>
+
+                <div class="skill-item">
+
+                    <span>
+                        REST APIs
+                    </span>
+
+                    <span class="pending">
+                        Learning
+                    </span>
+
+                </div>
+
+                <div class="skill-item">
+
+                    <span>
+                        Docker
+                    </span>
+
+                    <span class="pending">
+                        Upcoming
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FEATURES
+========================================================= -->
+
+<section
+    id="features"
+    class="section"
+>
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <p>
+                WHAT SKILLFORGE OFFERS
+            </p>
+
+            <h2>
+                Everything you need to grow your career
+            </h2>
+
+        </div>
+
+
+        <div class="features-grid">
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🎯
+                </div>
+
+                <h3>
+                    Career Goals
+                </h3>
+
+                <p>
+                    Choose your target career and understand
+                    the skills required to reach it.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🛠️
+                </div>
+
+                <h3>
+                    Skill Tracking
+                </h3>
+
+                <p>
+                    Track your skills and monitor your
+                    development over time.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    📊
+                </div>
+
+                <h3>
+                    Skill Gap Analysis
+                </h3>
+
+                <p>
+                    Discover which skills you need to improve
+                    for your target career.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🗺️
+                </div>
+
+                <h3>
+                    Learning Roadmap
+                </h3>
+
+                <p>
+                    Follow a personalized roadmap and
+                    track your learning progress.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     HOW IT WORKS
+========================================================= -->
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <p>
+                HOW IT WORKS
+            </p>
+
+            <h2>
+                From skills to career readiness
+            </h2>
+
+        </div>
+
+
+        <div class="features-grid">
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    1️⃣
+                </div>
+
+                <h3>
+                    Build Your Profile
+                </h3>
+
+                <p>
+                    Add your education, background, projects
+                    and career information.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    2️⃣
+                </div>
+
+                <h3>
+                    Add Your Skills
+                </h3>
+
+                <p>
+                    Track the technologies and skills you
+                    already know.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    3️⃣
+                </div>
+
+                <h3>
+                    Analyze Your Gap
+                </h3>
+
+                <p>
+                    Compare your current skills with the
+                    requirements of your target career.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    4️⃣
+                </div>
+
+                <h3>
+                    Follow Your Roadmap
+                </h3>
+
+                <p>
+                    Learn missing skills and track your
+                    progress toward career readiness.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ABOUT
+========================================================= -->
+
+<section
+    id="about"
+    class="section about-section"
+>
+
+    <div class="container about-content">
+
+        <div>
+
+            <p class="section-label">
+                ABOUT SKILLFORGE AI
+            </p>
+
+            <h2>
+                Turn your skills into a career roadmap.
+            </h2>
+
+        </div>
+
+        <p>
+            SkillForge AI is designed to help students and
+            developers understand where they currently stand
+            and what they should learn next to reach their
+            career goals.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     CALL TO ACTION
+========================================================= -->
+
+<section
+    id="contact"
+    class="section contact-section"
+>
+
+    <div class="container">
+
+        <h2>
+            Start building your future.
+        </h2>
+
+        <p>
+            Track your skills, discover your gaps and
+            create your career roadmap.
+        </p>
+
+
+        {% if user.is_authenticated %}
+
+            <a
+                href="{% url 'roadmap' %}"
+                class="btn primary-btn"
+            >
+                View My Roadmap
+            </a>
+
+        {% else %}
+
+            <a
+                href="{% url 'signup' %}"
+                class="btn primary-btn"
+            >
+                Get Started
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,306 @@
+{% extends 'base.html' %}
+
+{% block title %}
+SkillForge AI | Certifications
+{% endblock %}
+
+{% block content %}
+
+<section class="certifications-section">
+
+    <div class="container">
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <div class="certifications-header">
+
+            <p class="section-label">
+                PROFESSIONAL ACHIEVEMENTS
+            </p>
+
+            <h1>
+                My Certifications
+            </h1>
+
+            <p>
+                Keep track of your certifications and
+                professional achievements.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             LAYOUT
+        ================================================== -->
+
+        <div class="certifications-layout">
+
+
+            <!-- ADD CERTIFICATION -->
+
+            <div class="certification-form-card">
+
+                <div class="card-icon">
+                    🏆
+                </div>
+
+                <h2>
+                    Add Certification
+                </h2>
+
+                <p class="card-description">
+                    Add certifications you've earned during
+                    your learning and career journey.
+                </p>
+
+
+                <form
+                    method="POST"
+                    action="{% url 'add_certification' %}"
+                >
+
+                    {% csrf_token %}
+
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            Certification Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="e.g. Python Programming"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="organization">
+                            Organization
+                        </label>
+
+                        <input
+                            type="text"
+                            id="organization"
+                            name="organization"
+                            placeholder="e.g. Coursera"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="issue_date">
+                            Issue Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="issue_date"
+                            name="issue_date"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="certificate_url">
+                            Certificate URL
+                        </label>
+
+                        <input
+                            type="url"
+                            id="certificate_url"
+                            name="certificate_url"
+                            placeholder="https://..."
+                        >
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="auth-button"
+                    >
+                        + Add Certification
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <!-- CERTIFICATION LIST -->
+
+            <div class="certifications-list-card">
+
+                <div class="certifications-list-header">
+
+                    <div>
+
+                        <p class="section-label">
+                            MY ACHIEVEMENTS
+                        </p>
+
+                        <h2>
+                            Certifications
+                        </h2>
+
+                    </div>
+
+                    <span class="certifications-count">
+                        {{ certifications|length }}
+                    </span>
+
+                </div>
+
+
+                {% if certifications %}
+
+                    <div class="certifications-list">
+
+                        {% for certification in certifications %}
+
+                            <article class="certification-card">
+
+                                <div class="certification-icon">
+                                    🏆
+                                </div>
+
+
+                                <div class="certification-content">
+
+                                    <div class="certification-top">
+
+                                        <div>
+
+                                            <h3>
+                                                {{ certification.name }}
+                                            </h3>
+
+                                            <p>
+                                                {{ certification.organization }}
+                                            </p>
+
+                                        </div>
+
+
+                                        <form
+                                            method="POST"
+                                            action="{% url 'delete_certification' certification.id %}"
+                                        >
+
+                                            {% csrf_token %}
+
+                                            <button
+                                                type="submit"
+                                                class="delete-certification"
+                                                onclick="return confirm('Are you sure you want to delete this certification?');"
+                                            >
+                                                Delete
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+
+                                    <div class="certification-meta">
+
+                                        {% if certification.issue_date %}
+
+                                            <span>
+                                                📅
+                                                {{ certification.issue_date|date:"F Y" }}
+                                            </span>
+
+                                        {% endif %}
+
+
+                                        {% if certification.certificate_url %}
+
+                                            <a
+                                                href="{{ certification.certificate_url }}"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                View Certificate →
+                                            </a>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                </div>
+
+                            </article>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <div class="empty-certifications">
+
+                        <div class="empty-icon">
+                            🏆
+                        </div>
+
+                        <h2>
+                            No Certifications Yet
+                        </h2>
+
+                        <p>
+                            Add your certifications to showcase
+                            your professional achievements.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ACTIONS
+        ================================================== -->
+
+        <div class="skill-gap-actions">
+
+            <a
+                href="{% url 'dashboard' %}"
+                class="btn secondary-btn"
+            >
+                ← Dashboard
+            </a>
+
+            <a
+                href="{% url 'projects' %}"
+                class="btn primary-btn"
+            >
+                Projects →
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

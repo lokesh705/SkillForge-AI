@@ -1,0 +1,481 @@
+{% extends 'base.html' %}
+
+{% block title %}
+SkillForge AI | Learning Roadmap
+{% endblock %}
+
+{% block content %}
+
+<section class="skill-gap-section">
+
+    <div class="container">
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <div class="skill-gap-header">
+
+            <p class="section-label">
+                PERSONALIZED LEARNING
+            </p>
+
+            <h1>
+                Your Learning Roadmap
+            </h1>
+
+            <p>
+                Follow your personalized learning path based on
+                the skills you need for your career goal.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             CAREER
+        ================================================== -->
+
+        {% if career %}
+
+        <div class="analysis-career-card">
+
+            <div class="analysis-career-icon">
+                🎯
+            </div>
+
+            <div>
+
+                <p>
+                    TARGET CAREER
+                </p>
+
+                <h2>
+                    {{ career.title }}
+                </h2>
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <div class="skill-gap-empty">
+
+            <div class="empty-icon">
+                🎯
+            </div>
+
+            <h2>
+                Choose a Career Goal First
+            </h2>
+
+            <p>
+                Select a career goal so SkillForge AI can
+                create a personalized learning roadmap for you.
+            </p>
+
+            <a
+                href="{% url 'career' %}"
+                class="btn primary-btn"
+            >
+                Choose Career
+            </a>
+
+        </div>
+
+        {% endif %}
+
+
+        {% if career %}
+
+        <!-- =================================================
+             ROADMAP PROGRESS
+        ================================================== -->
+
+        <div class="match-card">
+
+            <div class="match-score">
+
+                <span>
+                    {{ roadmap_percentage }}%
+                </span>
+
+                <small>
+                    Complete
+                </small>
+
+            </div>
+
+
+            <div class="match-content">
+
+                <h2>
+                    Roadmap Progress
+                </h2>
+
+                <p>
+                    You have completed
+                    <strong>
+                        {{ completed_items }}
+                    </strong>
+                    out of
+                    <strong>
+                        {{ total_items }}
+                    </strong>
+                    learning items.
+                </p>
+
+
+                <div class="match-progress">
+
+                    <div
+                        class="match-progress-bar"
+                        style="width: {{ roadmap_percentage }}%;"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ROADMAP STATS
+        ================================================== -->
+
+        <div class="analysis-stats">
+
+
+            <div class="analysis-stat">
+
+                <div class="analysis-stat-icon">
+                    📚
+                </div>
+
+                <div>
+
+                    <span>
+                        Total Topics
+                    </span>
+
+                    <strong>
+                        {{ total_items }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="analysis-stat matched-stat">
+
+                <div class="analysis-stat-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <span>
+                        Completed
+                    </span>
+
+                    <strong>
+                        {{ completed_items }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="analysis-stat missing-stat">
+
+                <div class="analysis-stat-icon">
+                    ⏳
+                </div>
+
+                <div>
+
+                    <span>
+                        Remaining
+                    </span>
+
+                    <strong>
+                        {{ total_items|add:"-"|add:completed_items }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ROADMAP
+        ================================================== -->
+
+        {% if roadmap_items %}
+
+        <div class="comparison-card">
+
+            <div class="comparison-header">
+
+                <div>
+
+                    <p class="section-label">
+                        YOUR ROADMAP
+                    </p>
+
+                    <h2>
+                        Skills You Need to Learn
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="roadmap-list">
+
+
+                {% for item in roadmap_items %}
+
+                <div class="roadmap-item">
+
+                    <!-- Timeline -->
+
+                    <div class="roadmap-timeline">
+
+                        <div class="roadmap-number">
+                            {{ forloop.counter }}
+                        </div>
+
+                        {% if not forloop.last %}
+
+                        <div class="roadmap-line"></div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Content -->
+
+                    <div class="roadmap-content">
+
+                        <div class="roadmap-top">
+
+                            <div>
+
+                                <span class="roadmap-skill">
+                                    {{ item.skill_name }}
+                                </span>
+
+                                {% if item.topic %}
+
+                                <h3>
+                                    {{ item.topic }}
+                                </h3>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            {% if item.status == "Completed" %}
+
+                            <span class="roadmap-status completed-status">
+                                ✓ Completed
+                            </span>
+
+                            {% elif item.status == "In Progress" %}
+
+                            <span class="roadmap-status progress-status">
+                                ◐ In Progress
+                            </span>
+
+                            {% else %}
+
+                            <span class="roadmap-status pending-status">
+                                ○ Not Started
+                            </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        {% if item.description %}
+
+                        <p class="roadmap-description">
+                            {{ item.description }}
+                        </p>
+
+                        {% endif %}
+
+
+                        <!-- Learning Information -->
+
+                        <div class="roadmap-meta">
+
+                            <span>
+                                ⏱️
+                                {{ item.estimated_hours }}
+                                hour{{ item.estimated_hours|pluralize }}
+                            </span>
+
+                            {% if item.resource_url %}
+
+                            <a
+                                href="{{ item.resource_url }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                📖 Learning Resource
+                            </a>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- Progress -->
+
+                        <div class="roadmap-progress-area">
+
+                            <div class="roadmap-progress-header">
+
+                                <span>
+                                    Progress
+                                </span>
+
+                                <strong>
+                                    {{ item.progress }}%
+                                </strong>
+
+                            </div>
+
+
+                            <div class="roadmap-progress">
+
+                                <div
+                                    class="roadmap-progress-bar"
+                                    style="width: {{ item.progress }}%;"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Update Progress -->
+
+                        <form
+                            method="POST"
+                            action="{% url 'update_learning_progress' item.id %}"
+                            class="roadmap-form"
+                        >
+
+                            {% csrf_token %}
+
+                            <label>
+                                Update Progress
+                            </label>
+
+                            <div class="roadmap-form-row">
+
+                                <input
+                                    type="number"
+                                    name="progress"
+                                    min="0"
+                                    max="100"
+                                    value="{{ item.progress }}"
+                                    required
+                                >
+
+                                <button
+                                    type="submit"
+                                    class="btn primary-btn"
+                                >
+                                    Update
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <!-- =================================================
+             NO ROADMAP
+        ================================================== -->
+
+        <div class="skill-gap-empty">
+
+            <div class="empty-icon">
+                🎉
+            </div>
+
+            <h2>
+                You're All Caught Up!
+            </h2>
+
+            <p>
+                You currently don't have any missing skills
+                for your selected career goal.
+            </p>
+
+            <a
+                href="{% url 'skill_gap' %}"
+                class="btn primary-btn"
+            >
+                View Skill Gap
+            </a>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- =================================================
+             ACTION BUTTONS
+        ================================================== -->
+
+        <div class="skill-gap-actions">
+
+            <a
+                href="{% url 'skill_gap' %}"
+                class="btn secondary-btn"
+            >
+                ← Skill Gap Analysis
+            </a>
+
+            <a
+                href="{% url 'skills' %}"
+                class="btn secondary-btn"
+            >
+                Manage My Skills
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

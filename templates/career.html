@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+
+{% block title %}
+Career Goal | SkillForge AI
+{% endblock %}
+
+
+{% block content %}
+
+<section class="career-section">
+
+    <div class="container">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <div class="career-header">
+
+            <p class="section-label">
+                CAREER DEVELOPMENT
+            </p>
+
+            <h1>
+                Choose Your Career Goal
+            </h1>
+
+            <p>
+                Select the career you want to pursue.
+                SkillForge will use this goal later for
+                personalized skill-gap analysis.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             MESSAGES
+        ================================================== -->
+
+        {% if messages %}
+
+            <div class="messages">
+
+                {% for message in messages %}
+
+                    <div class="message {{ message.tags }}">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- =================================================
+             CURRENT CAREER
+        ================================================== -->
+
+        <div class="current-career-card">
+
+            <div class="current-career-icon">
+                🎯
+            </div>
+
+            <div>
+
+                <p>
+                    CURRENT CAREER GOAL
+                </p>
+
+                <h2>
+
+                    {% if profile.career_goal %}
+
+                        {{ profile.career_goal }}
+
+                    {% else %}
+
+                        No career goal selected
+
+                    {% endif %}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             CAREER SELECTION
+        ================================================== -->
+
+        <div class="career-selection-card">
+
+            <div class="career-card-header">
+
+                <div>
+
+                    <p class="section-label">
+                        AVAILABLE CAREERS
+                    </p>
+
+                    <h2>
+                        Select Your Target Career
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            {% if career_goals %}
+
+                <form
+                    method="POST"
+                    action="{% url 'set_career_goal' %}"
+                >
+
+                    {% csrf_token %}
+
+
+                    <div class="career-grid">
+
+                        {% for career in career_goals %}
+
+                            <label
+                                class="career-option"
+                            >
+
+                                <input
+                                    type="radio"
+                                    name="career_goal"
+                                    value="{{ career.id }}"
+                                    {% if profile.career_goal == career.title %}
+                                        checked
+                                    {% endif %}
+                                >
+
+
+                                <div class="career-option-content">
+
+                                    <div class="career-icon">
+                                        💼
+                                    </div>
+
+                                    <div>
+
+                                        <h3>
+                                            {{ career.title }}
+                                        </h3>
+
+                                        {% if career.description %}
+
+                                            <p>
+                                                {{ career.description }}
+                                            </p>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                </div>
+
+                            </label>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="auth-button career-submit"
+                    >
+                        Save Career Goal
+                    </button>
+
+                </form>
+
+            {% else %}
+
+                <div class="empty-careers">
+
+                    <div class="empty-icon">
+                        🎯
+                    </div>
+
+                    <h3>
+                        No career goals available
+                    </h3>
+
+                    <p>
+                        Add career goals from the Django
+                        administration panel.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

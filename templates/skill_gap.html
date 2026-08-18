@@ -1,0 +1,417 @@
+{% extends "base.html" %}
+
+{% block title %}
+Skill Gap Analysis | SkillForge AI
+{% endblock %}
+
+
+{% block content %}
+
+<section class="skill-gap-section">
+
+    <div class="container">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <div class="skill-gap-header">
+
+            <p class="section-label">
+                AI CAREER ANALYSIS
+            </p>
+
+            <h1>
+                Skill Gap Analysis
+            </h1>
+
+            <p>
+                Discover how your current skills compare
+                with the skills required for your target career.
+            </p>
+
+        </div>
+
+
+        {% if not profile.career_goal %}
+
+            <!-- No career -->
+
+            <div class="skill-gap-empty">
+
+                <div class="empty-icon">
+                    🎯
+                </div>
+
+                <h2>
+                    Choose a Career Goal First
+                </h2>
+
+                <p>
+                    Select your target career before
+                    running your skill gap analysis.
+                </p>
+
+                <a
+                    href="{% url 'career' %}"
+                    class="btn primary-btn"
+                >
+                    Choose Career
+                </a>
+
+            </div>
+
+
+        {% elif not career %}
+
+            <!-- Career missing -->
+
+            <div class="skill-gap-empty">
+
+                <div class="empty-icon">
+                    ⚠️
+                </div>
+
+                <h2>
+                    Career Data Not Found
+                </h2>
+
+                <p>
+                    Your selected career is not available
+                    in the career database.
+                </p>
+
+                <a
+                    href="{% url 'career' %}"
+                    class="btn primary-btn"
+                >
+                    Choose Another Career
+                </a>
+
+            </div>
+
+
+        {% else %}
+
+
+            <!-- =================================================
+                 CAREER
+            ================================================== -->
+
+            <div class="analysis-career-card">
+
+                <div class="analysis-career-icon">
+                    🎯
+                </div>
+
+                <div>
+
+                    <p>
+                        TARGET CAREER
+                    </p>
+
+                    <h2>
+                        {{ career.title }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 MATCH SCORE
+            ================================================== -->
+
+            <div class="match-card">
+
+                <div class="match-score">
+
+                    <span>
+                        {{ match_percentage }}%
+                    </span>
+
+                    <small>
+                        Skill Match
+                    </small>
+
+                </div>
+
+
+                <div class="match-content">
+
+                    <h2>
+                        Your Career Readiness
+                    </h2>
+
+                    <p>
+
+                        You currently match
+
+                        <strong>
+                            {{ total_matched }}
+                        </strong>
+
+                        out of
+
+                        <strong>
+                            {{ total_required }}
+                        </strong>
+
+                        required skills for
+                        <strong>
+                            {{ career.title }}
+                        </strong>.
+
+                    </p>
+
+
+                    <div class="match-progress">
+
+                        <div
+                            class="match-progress-bar"
+                            style="width: {{ match_percentage }}%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 ANALYSIS SUMMARY
+            ================================================== -->
+
+            <div class="analysis-stats">
+
+                <div class="analysis-stat matched-stat">
+
+                    <span class="analysis-stat-icon">
+                        ✓
+                    </span>
+
+                    <div>
+
+                        <span>
+                            Matched Skills
+                        </span>
+
+                        <strong>
+                            {{ total_matched }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="analysis-stat missing-stat">
+
+                    <span class="analysis-stat-icon">
+                        !
+                    </span>
+
+                    <div>
+
+                        <span>
+                            Missing Skills
+                        </span>
+
+                        <strong>
+                            {{ total_missing }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="analysis-stat">
+
+                    <span class="analysis-stat-icon">
+                        📚
+                    </span>
+
+                    <div>
+
+                        <span>
+                            Required Skills
+                        </span>
+
+                        <strong>
+                            {{ total_required }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 SKILLS COMPARISON
+            ================================================== -->
+
+            <div class="skill-comparison-grid">
+
+
+                <!-- Matched -->
+
+                <div class="comparison-card">
+
+                    <div class="comparison-header">
+
+                        <div>
+
+                            <p class="section-label">
+                                YOU HAVE
+                            </p>
+
+                            <h2>
+                                Matched Skills
+                            </h2>
+
+                        </div>
+
+                        <span class="comparison-count">
+                            {{ total_matched }}
+                        </span>
+
+                    </div>
+
+
+                    {% if matched_skills %}
+
+                        <div class="comparison-list">
+
+                            {% for skill in matched_skills %}
+
+                                <div class="comparison-item matched">
+
+                                    <span>
+                                        ✓
+                                    </span>
+
+                                    <strong>
+                                        {{ skill }}
+                                    </strong>
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="comparison-empty">
+
+                            <p>
+                                No required skills matched yet.
+                            </p>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Missing -->
+
+                <div class="comparison-card">
+
+                    <div class="comparison-header">
+
+                        <div>
+
+                            <p class="section-label">
+                                NEED TO LEARN
+                            </p>
+
+                            <h2>
+                                Missing Skills
+                            </h2>
+
+                        </div>
+
+                        <span class="comparison-count missing-count">
+                            {{ total_missing }}
+                        </span>
+
+                    </div>
+
+
+                    {% if missing_skills %}
+
+                        <div class="comparison-list">
+
+                            {% for skill in missing_skills %}
+
+                                <div class="comparison-item missing">
+
+                                    <span>
+                                        +
+                                    </span>
+
+                                    <strong>
+                                        {{ skill }}
+                                    </strong>
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="comparison-empty">
+
+                            <p>
+                                Excellent! You have all
+                                required skills.
+                            </p>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 ACTIONS
+            ================================================== -->
+
+            <div class="skill-gap-actions">
+
+                <a
+                    href="{% url 'skills' %}"
+                    class="btn secondary-btn"
+                >
+                    Manage My Skills
+                </a>
+
+                <a
+                    href="{% url 'career' %}"
+                    class="btn primary-btn"
+                >
+                    Change Career
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}
